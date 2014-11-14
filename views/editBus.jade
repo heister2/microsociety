@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  .container
+    .row
+      .col-lg-6.col-lg-offset-3
+        #edit-form
+          .well
+            form(action="/edit/#{userToEdit._id}", method="post", role="form")
+              legend Update an Account
+              input(type='hidden', value=locals._csrf, name='_csrf')              
+              .form-group
+                label(for="bus_name") Name
+                input.form-control(type="text", name="bus_name", value="#{userToEdit.bus_name}")
+              .form-group
+                label(for="facilitators") Facilitators (Teachers)
+                select.form-control(name="facilitators")
+                  option(selected="selected") None
+                  each teacher in teachers
+                    for ID in userToEdit.facilitatorIDs
+                      if teacher.idNum === ID
+                        option(selected="selected")= teacher.name.first + ' ' + teacher.name.last + ' ' + teacher.idNum
+                      else
+                        option= teacher.name.first + ' ' + teacher.name.last + ' ' + teacher.idNum
+                    if userToEdit.facilitatorIDs = []
+                      option= teacher.name.first + ' ' + teacher.name.last + ' ' + teacher.idNum
+              .form-group
+                label(for="password") PIN
+                input.form-control(type="password", name="password")
+              div.submit
+                input.btn.btn-primary.btn-sm(type="submit", value="Update Account")
+

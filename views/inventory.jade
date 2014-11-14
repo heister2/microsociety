@@ -1,0 +1,42 @@
+extends layout
+
+block content
+  .container
+    .row
+      .col-lg-6.col-lg-offset-3 
+        .well
+          h2 Welcome to #{business.bus_name}!
+      .col-lg-6
+        .well
+          form(action='/inventory', method='post', role="form")
+            legend Update the Inventory
+            input(type='hidden', value=locals._csrf, name='_csrf')
+            .form-group
+              label(for="item") Item
+              input.form-control(type="text", name="item")
+            .form-group
+              label(for="quantity") Quantity
+              input.form-control(type="number", name="quantity")
+            .form-group
+              label(for="cost") Cost
+              input.form-control(type="number", name="cost")
+            .form-group
+              label(for="price") Price
+              input.form-control(type="number", name="price")
+            div.submit
+              input.btn.btn-primary.btn-sm(type="submit", value="Submit")
+      .col-lg-6
+        .well
+          p.lead Current Inventory
+            table.table#inventory-table
+              th Item
+              th Quantity
+              th Cost
+              th Price 
+              if inventory
+                each thing in inventory
+                  tr
+                    td= thing.item 
+                    td= thing.quantity
+                    td= thing.cost.toFixed(2) 
+                    td= thing.price.toFixed(2)

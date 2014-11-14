@@ -1,0 +1,57 @@
+extends layout
+
+block content
+  .container
+    .well
+      ul.nav.nav-tabs(role="tablist")
+          li.active
+            a(href="#users", role="tab", data-toggle="tab") Users
+          li
+            a(href="#businesses", role="tab", data-toggle="tab") Businesses
+      .tab-content
+        #users.tab-pane.active
+          br
+          p.lead User Accounts
+          table.table#users-table
+            th ID Number
+            th User Type
+            th First Name
+            th Last Name
+            th Employer ID
+            th Job
+            th
+            th
+            th
+            each user in users
+              tr
+                td= user.idNum
+                td= user.role
+                td= user.name.first
+                td= user.name.last
+                td= user.employerID
+                td= user.job
+                td
+                  a(href="/edit/#{user._id}") Edit
+                td
+                  a(href="/users/#{user._id}") View
+                td
+                  a(href="/delete/#{user._id}") Delete
+        #businesses.tab-pane
+          br
+          p.lead Business Accounts
+          table.table#business-table
+            th ID Number
+            th Business Name
+            th
+            th
+            th
+            each business in businesses
+              tr
+                td= business.idNum
+                td= business.bus_name
+                td
+                  a(href="/editBus/#{business._id}") Edit
+                td
+                  a(href="/businesses/#{business._id}") View
+                td
+                  a(href="/delBus/#{business._id}") Delete

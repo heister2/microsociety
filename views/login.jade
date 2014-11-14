@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  .container
+    .login
+      .col-md-6.col-md-offset-3
+        .well
+          form(action='/login', method='post', role="form")
+            legend Login
+            if (message.length > 0) 
+              .alert.alert-danger #{message}
+            input(type='hidden', value=locals._csrf, name='_csrf')
+            .form-group
+                label(for="idNum") ID Number
+                input.form-control(type="text", name="idNum")
+            .form-group
+              label(for="password") PIN
+              input.form-control(type="password", name="password")
+            div.submit
+              input.btn.btn-primary.btn-default(type="submit", value="Login")
+          br
+          p.lead Need an Account? Ask your Teacher.

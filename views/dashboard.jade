@@ -1,0 +1,93 @@
+extends layout
+
+block content
+  .container
+    .well
+      ul.nav.nav-tabs(role="tablist")
+        li.active
+          a(href="#profile", role="tab", data-toggle="tab") Profile
+        if user.employerID
+          li
+            a(href="#business", role="tab", data-toggle="tab") Business
+      .tab-content
+        #profile.tab-pane.active
+          br
+          p.lead Welcome #{user.name.first} #{user.name.last}!
+          if (user.role === "Admin")
+            a.btn.btn-primary.btn-med(href="/signup") Create A User Account
+            &nbsp;
+            &nbsp;
+            a.btn.btn-primary.btn-med(href="/business") Create A Business Account
+            &nbsp;
+            &nbsp;
+            a.btn.btn-primary.btn-med(href="/users") View User Accounts/Businesses
+            br
+            br
+          p ID Number: #{user.idNum}
+          p User Type: #{user.role}
+          if user.grade
+            p Class of: #{user.grade}
+          if user.job 
+            p Job: #{user.job}
+          p Account Number: #{user.account._id}
+          p Account Balance: #{user.account.balance} Emeralds
+          br
+          if cusTransactions
+            p.lead Transaction History
+            table.table#customer-transaction-table
+              th Timestamp
+              th Business ID
+              th Verified?
+              th Total
+              each charge in cusTransactions
+                tr
+                  td= moment(charge.timestamp).format('MMMM Do YYYY, h:mm a')
+                  td= charge.busID
+                  if charge.verified
+                    td Yes
+                  else
+                    td No
+                  - var cusTotal = 0
+                  each purchase in charge.purchases
+                    - cusTotal += purchase.total
+                  td= cusTotal.toFixed(2)
+        if business  
+          #business.tab-pane
+            br
+            p.lead #{business.bus_name}
+            p ID Number: #{business.idNum}
+            p Facilitator:
+            p Account Balance: #{business.account.balance} Emeralds
+            p.lead Current Inventory
+            table.table#inventory-table
+              th Item
+              th Quantity
+              th Cost
+              th Price 
+              if inventory
+                each thing in inventory
+                  tr
+                    td= thing.item 
+                    td= thing.quantity
+                    td= thing.cost.toFixed(2) 
+                    td= thing.price.toFixed(2)
+            br
+            p.lead Transaction History
+            table.table#business-transaction-table
+              th Timestamp
+              th Customer ID
+              th Verified?
+              th Total
+              if transactions
+                each charge in transactions
+                  tr
+                    td= moment(charge.timestamp).format('MMMM Do YYYY, h:mm a')
+                    td= charge.customerID
+                    if charge.verified
+                      td Yes
+                    else
+                      td No
+                    - var total = 0
+                    each purchase in charge.purchases
+                      - total += purchase.total
+                    td= total.toFixed(2)

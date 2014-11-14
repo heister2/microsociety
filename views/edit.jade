@@ -1,0 +1,51 @@
+extends layout
+
+block content
+  .container
+    .row
+      .col-lg-6.col-lg-offset-3
+        #edit-form
+          .well
+            form(action="/edit/#{userToEdit._id}", method="post", role="form")
+              legend Update an Account
+              input(type='hidden', value=locals._csrf, name='_csrf')              
+              .form-group
+                label(for="role") Type of Account
+                - var userRoles = ['Admin', 'Teacher', 'Student']
+                select.form-control(name="role")
+                  each role in userRoles
+                    if (userToEdit.role === role)
+                      option(selected="selected")= role
+                    else
+                      option= role
+              .form-group
+                label(for="firstName") First Name
+                input.form-control(type="text", name="firstName", value="#{userToEdit.name.first}")
+              .form-group
+                label(for="lastName") Last Name
+                input.form-control(type="text", name="lastName", value="#{userToEdit.name.last}")
+              if (userToEdit.role === "Student")
+                .form-group
+                  label(for="job") Job
+                  - var userJobs = ['None', 'General Employee', 'Cashier', 'Manager', 'Facilitator']
+                  select.form-control(name="job")
+                    each job in userJobs
+                      if (userToEdit.job === job)
+                        option(selected="selected")= job
+                      else
+                        option= job
+                .form-group
+                  label(for="employerID") Employer ID
+                  if (userToEdit.employerID !== '')
+                    input.form-control(type="number", name="employerID", value="#{userToEdit.employerID}")
+                  else
+                    input.form-control(type="number", name="employerID")
+                .form-group
+                  label(for="grade") Class of
+                  input.form-control(type="number", name="grade", value="#{userToEdit.grade}")
+              .form-group
+                label(for="password") PIN
+                input.form-control(type="password", name="password")
+              div.submit
+                input.btn.btn-primary.btn-sm(type="submit", value="Update Account")
+

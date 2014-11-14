@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  .container
+    .well
+      p.lead Business: #{business.bus_name}
+        p ID Number: #{business.idNum}
+        if (business.facilitatorIDs)
+          p Facilitator IDs: #{business.facilitatorIDs}
+      p Account ID: #{business.account._id}
+      p Account Balance: #{business.account.balance.toFixed(2)} Emeralds
+      p.lead Current Inventory
+            table.table#inventory-table
+              th Item
+              th Quantity
+              th Cost
+              th Price 
+              if inventory
+                each thing in inventory
+                  tr
+                    td= thing.item 
+                    td= thing.quantity
+                    td= thing.cost.toFixed(2) 
+                    td= thing.price.toFixed(2)
+            br
+            p.lead Transaction History
+            table.table#business-transaction-table
+              th Timestamp
+              th Customer ID
+              th Verified?
+              th Total
+              if transactions
+                each charge in transactions
+                  tr
+                    td= moment(charge.timestamp).format('MMMM Do YYYY, h:mm a')
+                    td= charge.customerID
+                    if charge.verified
+                      td Yes
+                    else
+                      td No
+                    - var total = 0
+                    each purchase in charge.purchases
+                      - total += purchase.total
+                    td= total.toFixed(2)

@@ -1,0 +1,16 @@
+body { background: url('../img/green.jpg'); background-size: cover; }
+#employer { display: none; }
+#student, #teacher, #admin { display: none; }
+/*#users-table, #users-table td, #users-table th { border: 3px solid black; }
+#users-table td, #users-table th { padding: 10px; }
+#business-table, #business-table td, #business-table th { border: 3px solid black; }
+#business-table td, #business-table th { padding: 10px; }
+#inventory-table, #inventory-table td, #inventory-table th { border: 3px solid black; }
+#inventory-table td, #inventory-table th { padding: 10px; }
+#shopping-cart, #shopping-cart td, #shopping-cart th { border: 3px solid black; }
+#shopping-cart td, #shopping-cart th { padding: 10px; }
+#business-transaction-table, #business-transaction-table td, #business-transaction-table th { border: 3px solid black; }
+#business-transaction-table td, #business-transaction-table th { padding: 10px; }
+#customer-transaction-table, #customer-transaction-table td, #customer-transaction-table th { border: 3px solid black; }
+#customer-transaction-table td, #customer-transaction-table th { padding: 10px; }*/
+#charge-total { opacity: 0; }

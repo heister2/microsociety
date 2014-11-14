@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  .container
+    .well
+      p.lead User: #{userToView.name.first} #{userToView.name.last}
+      p ID Number: #{userToView.idNum}
+      p Role: #{userToView.role}
+      if (userToView.grade)
+        p Grade: #{userToView.grade}
+      p Account ID: #{userToView.account._id}
+      p Account Balance: #{userToView.account.balance.toFixed(2)} Emeralds
+      if cusTransactions
+        p.lead Transaction History
+          table.table#customer-transaction-table
+            th Timestamp
+            th Business ID
+            th Verified?
+            th Total
+              each charge in cusTransactions
+                tr
+                  td= moment(charge.timestamp).format('MMMM Do YYYY, h:mm a')
+                  td= charge.busID
+                  if charge.verified
+                    td Yes
+                  else
+                    td No
+                  - var cusTotal = 0
+                  each purchase in charge.purchases
+                    - cusTotal += purchase.total
+                  td= cusTotal.toFixed(2)

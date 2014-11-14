@@ -1,0 +1,58 @@
+extends layout
+
+block content
+  .container
+    .row
+      .col-lg-6.col-lg-offset-3 
+        .well
+          h2 Welcome to #{business.bus_name}!
+          if flash 
+            if flash.success
+              .alert.alert-success #{flash.success}
+            if flash.failure
+              .alert.alert-danger #{flash.failure}
+      .col-lg-6
+        .well
+          form#itemized(role="form")
+            legend Add to Shopping Cart
+            input(type='hidden', value=locals._csrf, name='_csrf')
+            .form-group
+              label(for="item") Item
+              select#item.form-control(name="item")
+                each thing in inventory
+                  option= thing.item + ' ' + thing.price.toFixed(2)
+            .form-group
+              label(for="quantity") Quantity
+              input#quantity.form-control(type="number", name="quantity" min="1" value="1")
+            div.submit
+              input#itemized-btn.btn.btn-primary.btn-sm(type="submit", value="Submit")
+      .col-lg-6
+        .well
+          p.lead Shopping Cart
+          table.table#shopping-cart
+            th Item
+            th Quantity
+            th Price
+            th Subtotal
+            th
+          br
+          a.btn.btn-primary.btn-sm(id="make-transaction" href="#") Ready to Purchase?
+      .col-lg-6.col-lg-offset-3#charge-total
+        .well
+          form#transaction(action='/cashRegister', method='post', role='form')
+            legend Make Transaction
+            input(type='hidden', value=locals._csrf, name='_csrf')
+            .form-group
+              label(for="customerID") Customer ID
+              input.form-control(type="number", name="customerID")
+            .form-group
+              label(for="total") Total
+              input#total.form-control(type="Number", name="total")
+            input#items(type='hidden' name="itemsList")
+            br
+            .form-group
+              p.lead Verified Customer? &nbsp; &nbsp; &nbsp; &nbsp;
+                input(type="checkbox", name="verified", value="true") 
+                | &nbsp;Yes
+            div.submit
+              input.btn.btn-primary.btn-sm(type="submit", value="Submit")

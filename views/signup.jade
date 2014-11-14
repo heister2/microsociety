@@ -1,0 +1,93 @@
+extends layout
+
+block content
+  .container
+    .register
+      .row
+        .col-lg-6.col-lg-offset-3
+          #which-role.text-center
+            .well
+              h3 What kind of account do you want to create?
+              a#student-btn.btn.btn-primary.btn-lg(href="#student") Student
+              &nbsp; 
+              &nbsp;
+              a#teacher-btn.btn.btn-primary.btn-lg(href="#teacher") Teacher
+              &nbsp; 
+              &nbsp;
+              a#admin-btn.btn.btn-primary.btn-lg(href="#admin") Admin
+          #student
+            .well
+              form(action='/signup', method='post', role="form")
+                legend Create A New Student Account
+                if (message.length > 0) 
+                  .alert.alert-danger #{message}
+                input(type='hidden', value=locals._csrf, name='_csrf')
+                .form-group
+                  label(for="role") Type of Account
+                  select.form-control(name="role")
+                    option(selected="selected") Student
+                    option Teacher
+                    option Admin
+                .form-group
+                  label(for="firstName") First Name
+                  input.form-control(type="text", name="firstName")
+                .form-group
+                  label(for="lastName") Last Name
+                  input.form-control(type="text", name="lastName")
+                .form-group
+                  label(for="grade") Class of
+                  input.form-control(type="number", name="grade")
+                .form-group
+                  label(for="password") PIN
+                  input.form-control(type="password", name="password")
+                div.submit
+                  input.btn.btn-primary.btn-sm(type="submit", value="Create Account")
+          #teacher
+            .well
+              form(action='/signup', method='post', role='form')
+                legend Create A New Teacher Account
+                if (message.length > 0) 
+                  .alert.alert-danger #{message}
+                input(type='hidden', value=locals._csrf, name='_csrf')
+                .form-group
+                  label(for="role") Type of Account
+                  select.form-control(name="role")
+                    option Student
+                    option(selected="selected") Teacher
+                    option Admin
+                .form-group
+                  label(for="firstName") First Name
+                  input.form-control(type="text", name="firstName")
+                .form-group
+                  label(for="lastName") Last Name
+                  input.form-control(type="text", name="lastName")
+                .form-group
+                  label(for="password") PIN
+                  input.form-control(type="password", name="password")
+                div.submit
+                  input.btn.btn-primary.btn-sm(type="submit", value="Create Account")
+          #admin
+            .well
+              form(action='/signup', method='post', role='form')
+                legend Create A New Admin Account
+                if (message.length > 0) 
+                  .alert.alert-danger #{message}
+                input(type='hidden', value=locals._csrf, name='_csrf')
+                .form-group
+                  label(for="role") Type of Account
+                  select.form-control(name="role")
+                    option Student
+                    option Teacher
+                    option(selected="selected") Admin
+                .form-group
+                  label(for="firstName") First Name
+                  input.form-control(type="text", name="firstName")
+                .form-group
+                  label(for="lastName") Last Name
+                  input.form-control(type="text", name="lastName")
+                .form-group
+                  label(for="password") PIN
+                  input.form-control(type="password", name="password")
+                div.submit
+                  input.btn.btn-primary.btn-sm(type="submit", value="Create Account")
+            
